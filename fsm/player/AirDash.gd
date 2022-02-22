@@ -1,6 +1,6 @@
 extends "res://fsm/player/OnAir.gd"
 
-
+#dash duration
 var timer: Timer
 
 func _ready() -> void:
@@ -8,6 +8,7 @@ func _ready() -> void:
 	timer.wait_time = player._dash_time
 
 func enter(_prev_info:={}) -> void:
+	#apply dash and cancel gravity
 	player.velocity.x = player.dash_force*player.face_direction
 	player.velocity.y = 0.0
 	timer.start()

@@ -32,9 +32,14 @@ var coyote_time:= 0.1
 var can_ajump:= true
 
 func _ready() -> void:
+	#calculate gravity constant
 	grav = _gravity()
+	#calculate jump constant
 	jump_force = -grav*_jump_time
+	#calculate dash constant
 	dash_force = _dash_speed()
+	
+	#initialize values
 	on_floor = is_on_floor()
 	was_on_floor = is_on_floor()
 	face_direction = 1.0
@@ -48,11 +53,13 @@ func get_direction() -> float:
 	return Input.get_axis("left","right")
 
 func apply_gravity(delta) -> void:
+	#skip gravity when coyote time
 	if not coyote_timer.is_stopped():
 		velocity.y = 0
 		return
 	
 	velocity.y += grav*delta
+	#terminal velocity
 	velocity.y = min(velocity.y,MAX_FALL)
 
 func calculate_velocity() -> void:
@@ -62,6 +69,7 @@ func calculate_velocity() -> void:
 func apply_movement() -> void:
 	velocity = move_and_slide(velocity,Vector2.UP)
 	
+	#save face direction; updates to last direction
 	if direction == 0:
 		return
 	face_direction = direction
@@ -74,13 +82,15 @@ func _gravity() -> float:
 func _dash_speed() -> float:
 	return _dash_length*_tile_units/_dash_time
 
+#checks ground prior to movement
 func prior_grounded() -> void:
 	was_on_floor = floor_check()
 	pass
 
+#check ground after movement
 func after_grounded() -> void:
 	on_floor = floor_check()
 	pass
-	
+
 func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()

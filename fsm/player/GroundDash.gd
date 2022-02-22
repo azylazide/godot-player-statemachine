@@ -1,5 +1,6 @@
 extends "res://fsm/player/OnGround.gd"
 
+#dash duration
 var timer: Timer
 
 func _ready() -> void:
@@ -8,6 +9,7 @@ func _ready() -> void:
 
 func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
+	#apply dash
 	player.velocity.x = player.dash_force*player.face_direction
 	player.velocity.y = 0.0
 	timer.start()

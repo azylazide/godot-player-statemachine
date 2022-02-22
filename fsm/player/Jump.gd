@@ -11,6 +11,7 @@ func exit() -> Dictionary:
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	
+	#transition after peak of jump
 	if player.velocity.y > 0:
 		state_machine.switch_states("Fall")
 	pass

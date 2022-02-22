@@ -3,6 +3,7 @@ extends "res://fsm/player/player_state.gd"
 #functions and variables for anything while on the ground
 
 func enter(_prev_info:={}) -> void:
+	#reset air dash bool when on ground
 	player.can_adash = true
 
 func state_input(_event: InputEvent) -> void:
