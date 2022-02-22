@@ -1,0 +1,103 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://fsm/player/Statemachine.gd" type="Script" id=1]
+[ext_resource path="res://fsm/player/OnGround.gd" type="Script" id=2]
+[ext_resource path="res://fsm/player/Idle.gd" type="Script" id=3]
+[ext_resource path="res://fsm/player/OnAir.gd" type="Script" id=4]
+[ext_resource path="res://fsm/player/Run.gd" type="Script" id=5]
+[ext_resource path="res://fsm/player/player.gd" type="Script" id=6]
+[ext_resource path="res://fsm/player/Jump.gd" type="Script" id=7]
+[ext_resource path="res://fsm/player/Fall.gd" type="Script" id=8]
+[ext_resource path="res://fsm/player/player_state.gd" type="Script" id=9]
+[ext_resource path="res://fsm/player/GroundDash.gd" type="Script" id=10]
+[ext_resource path="res://fsm/player/AirDash.gd" type="Script" id=11]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 25, 60 )
+
+[node name="player" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -60 )
+shape = SubResource( 1 )
+
+[node name="MovementSM" type="Node" parent="."]
+script = ExtResource( 1 )
+state_group = "PlayerStates"
+init_state = NodePath("MovementStates/OnGround/Idle")
+
+[node name="MovementStates" type="Node" parent="MovementSM"]
+script = ExtResource( 9 )
+
+[node name="OnGround" type="Node" parent="MovementSM/MovementStates"]
+script = ExtResource( 2 )
+
+[node name="Idle" type="Node" parent="MovementSM/MovementStates/OnGround" groups=["PlayerStates"]]
+script = ExtResource( 3 )
+
+[node name="Run" type="Node" parent="MovementSM/MovementStates/OnGround" groups=["PlayerStates"]]
+script = ExtResource( 5 )
+
+[node name="GDash" type="Node" parent="MovementSM/MovementStates/OnGround" groups=["PlayerStates"]]
+script = ExtResource( 10 )
+
+[node name="Timer" type="Timer" parent="MovementSM/MovementStates/OnGround/GDash"]
+one_shot = true
+
+[node name="OnAir" type="Node" parent="MovementSM/MovementStates"]
+script = ExtResource( 4 )
+
+[node name="Jump" type="Node" parent="MovementSM/MovementStates/OnAir" groups=["PlayerStates"]]
+script = ExtResource( 7 )
+
+[node name="Fall" type="Node" parent="MovementSM/MovementStates/OnAir" groups=["PlayerStates"]]
+script = ExtResource( 8 )
+
+[node name="ADash" type="Node" parent="MovementSM/MovementStates/OnAir" groups=["PlayerStates"]]
+script = ExtResource( 11 )
+
+[node name="Timer" type="Timer" parent="MovementSM/MovementStates/OnAir/ADash"]
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -65 )
+current = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = -23.0
+margin_top = -180.0
+margin_right = 24.0
+margin_bottom = -140.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 4.0
+margin_right = 47.0
+margin_bottom = 18.0
+text = "null"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_top = 22.0
+margin_right = 47.0
+margin_bottom = 36.0
+text = "null vel"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="DashCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="CoyoteTime" type="Timer" parent="."]
+one_shot = true
