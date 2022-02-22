@@ -77,7 +77,7 @@ func apply_movement() -> void:
 	#save face direction; updates to last direction
 	if direction == 0:
 		return
-	face_direction = direction
+	face_direction = -1 if direction < 0 else 1
 	pass
 
 func _gravity() -> float:
