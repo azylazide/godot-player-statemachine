@@ -8,6 +8,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 func _process(_delta: float) -> void:
 	owner.get_node("VBoxContainer/Label").text = current_state.name
 	owner.get_node("VBoxContainer/Label2").text = "velx: " + str(stepify(owner.velocity.x,0.01)) + " vely: " + str(stepify(owner.velocity.y,0.01))
+	owner.get_node("VBoxContainer/Label3").text = "dir: " + str(owner.get_direction())
 	._process(_delta)
 	pass
 

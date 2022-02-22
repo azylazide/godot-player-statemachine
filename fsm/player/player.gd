@@ -29,7 +29,11 @@ var can_adash:= true
 
 onready var coyote_timer:= $CoyoteTime 
 var coyote_time:= 0.1
+
 var can_ajump:= true
+
+onready var jump_bufferer:= $JumpBufferTime
+var jump_buffer:= 0.1
 
 func _ready() -> void:
 	#calculate gravity constant
@@ -46,6 +50,7 @@ func _ready() -> void:
 	
 	dash_cooldown.wait_time = dash_cooldown_time
 	coyote_timer.wait_time = coyote_time
+	jump_bufferer.wait_time = jump_buffer
 	
 	pass
 

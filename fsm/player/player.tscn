@@ -76,23 +76,27 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-margin_top = 4.0
-margin_right = 47.0
-margin_bottom = 18.0
+margin_right = 85.0
+margin_bottom = 14.0
 text = "null"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label2" type="Label" parent="VBoxContainer"]
-margin_top = 22.0
-margin_right = 47.0
-margin_bottom = 36.0
+margin_top = 18.0
+margin_right = 85.0
+margin_bottom = 32.0
 text = "null vel"
-align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 85.0
+margin_bottom = 50.0
+text = "null direction"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 
@@ -100,4 +104,7 @@ __meta__ = {
 one_shot = true
 
 [node name="CoyoteTime" type="Timer" parent="."]
+one_shot = true
+
+[node name="JumpBufferTime" type="Timer" parent="."]
 one_shot = true

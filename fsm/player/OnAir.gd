@@ -14,3 +14,7 @@ func state_input(_event: InputEvent) -> void:
 			player.dash_cooldown.start()
 			player.can_adash = false
 			state_machine.switch_states("ADash")
+
+	if _event.is_action_pressed("jump"):
+		player.jump_bufferer.start()
+		pass

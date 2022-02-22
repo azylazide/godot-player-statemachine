@@ -22,7 +22,10 @@ func state_physics(_delta: float) -> void:
 	#transition when coyote time is not active (both checks satisfy)
 	if not player.on_floor and not player.was_on_floor:
 		state_machine.switch_states("Fall")
-	pass
+	
+	if player.on_floor and not player.jump_bufferer.is_stopped():
+		player.jump_bufferer.stop()
+		state_machine.switch_states("Jump")
 
 func state_input(_event: InputEvent) -> void:
 	.state_input(_event)

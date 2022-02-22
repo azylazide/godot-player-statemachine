@@ -29,4 +29,8 @@ func state_physics(_delta: float) -> void:
 	if not player.on_floor and not player.was_on_floor:
 		state_machine.switch_states("Fall")
 	
+	if player.on_floor and not player.jump_bufferer.is_stopped():
+		player.jump_bufferer.stop()
+		state_machine.switch_states("Jump")
+	
 	pass
