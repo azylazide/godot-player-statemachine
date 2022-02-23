@@ -14,7 +14,7 @@ var direction: float
 var face_direction: float
 
 var _tile_units:= 64.0 #px/tile
-var _jump_height:= 3.5
+var _jump_height:= 5.5
 var _gap_length:= 12.5
 var _jump_time:= 0.8
 var _fall_time:= 0.8
@@ -113,7 +113,7 @@ func _jump_gravity() -> float:
 	return output
 
 func _fall_gravity() -> float:
-	var output = 2*(_jump_height*_tile_units*pow(MAX_WALK_TILE*_tile_units,2))/(pow(0.8*_gap_length*_tile_units/2.0,2))
+	var output = 2*(1.5*_jump_height*_tile_units*pow(MAX_WALK_TILE*_tile_units,2))/(pow(0.8*_gap_length*_tile_units/2.0,2))
 	return output
 
 func _jump_vel(h: float = _jump_height, x: float = _gap_length) -> float:
