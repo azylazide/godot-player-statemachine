@@ -3,8 +3,8 @@ extends KinematicBody2D
 #player controller script
 
 export(float) var MAX_RUN = 800
-export(float) var MAX_WALK = 400
 export(float) var MAX_FALL = 1000
+export(float) var MAX_WALK_TILE = 6.25
 
 var velocity = Vector2.ZERO
 var jump_force: float
@@ -12,14 +12,16 @@ var dash_force: float
 var direction: float
 var face_direction: float
 
-var _tile_units:= 64.0
+var _tile_units:= 64.0 #px/tile
 var _jump_height:= 3.5
-var _gap_length:= 4.0
+var _gap_length:= 12.5
 var _jump_time:= 0.8
+var _fall_time:= 0.8
 var _dash_length:= 5.0
 var _dash_time:= 0.2
 
-var grav: float
+var jump_grav: float
+var fall_grav: float
 var on_floor: bool
 var was_on_floor: bool
 
@@ -37,9 +39,10 @@ var jump_buffer:= 0.1
 
 func _ready() -> void:
 	#calculate gravity constant
-	grav = _gravity()
+	jump_grav = _jump_gravity()
+	fall_grav = _fall_gravity()
 	#calculate jump constant
-	jump_force = -grav*_jump_time
+	jump_force = -_jump_vel()
 	#calculate dash constant
 	dash_force = _dash_speed()
 	
@@ -63,13 +66,13 @@ func apply_gravity(delta) -> void:
 		velocity.y = 0
 		return
 	
-	velocity.y += grav*delta
+	velocity.y += jump_grav*delta
 	#terminal velocity
 	velocity.y = min(velocity.y,MAX_FALL)
 
 func calculate_velocity() -> void:
 	direction = get_direction()
-	velocity.x = lerp(velocity.x, MAX_WALK*direction,0.6)
+	velocity.x = lerp(velocity.x, MAX_WALK_TILE*_tile_units*direction,0.6)
 	
 func apply_movement() -> void:
 	velocity = move_and_slide(velocity,Vector2.UP)
@@ -79,13 +82,6 @@ func apply_movement() -> void:
 		return
 	face_direction = -1 if direction < 0 else 1
 	pass
-
-func _gravity() -> float:
-	var output = 2*(_jump_height*_tile_units)/(_jump_time*_jump_time)
-	return output
-
-func _dash_speed() -> float:
-	return _dash_length*_tile_units/_dash_time
 
 #checks ground prior to movement
 func prior_grounded() -> void:
@@ -99,3 +95,21 @@ func after_grounded() -> void:
 
 func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()
+
+
+#movement parameter calculations
+
+func _jump_gravity() -> float:
+	var output = 2*(_jump_height*_tile_units*pow(MAX_WALK_TILE*_tile_units,2))/(pow(_gap_length*_tile_units/2.0,2))
+	return output
+
+func _fall_gravity() -> float:
+	var output = 2*(_jump_height*_tile_units)/(_gap_length*_tile_units)
+	return output
+
+func _jump_vel() -> float:
+	var output = (2*_jump_height*_tile_units*MAX_WALK_TILE*_tile_units)/(_gap_length*_tile_units/2.0)
+	return output
+
+func _dash_speed() -> float:
+	return _dash_length*_tile_units/_dash_time

@@ -15,3 +15,10 @@ func state_physics(_delta: float) -> void:
 	if player.velocity.y > 0:
 		state_machine.switch_states("Fall")
 	pass
+
+func state_input(_event: InputEvent) -> void:
+	if _event.is_action_released("jump"):
+		player.velocity.y = 0
+		state_machine.switch_states("Fall")
+	
+	.state_input(_event)

@@ -7,7 +7,7 @@ class_name StateMachine
 #group of the state nodes 
 export(String) var state_group = null
 #current state
-var current_state: Node
+var current_state: State
 #initial state
 export(NodePath) var init_state
 #list of states as nodes

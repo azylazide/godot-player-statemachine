@@ -3,7 +3,7 @@ extends State
 #General movement state with its functions and variables
 #All movement states inherits from this script
 
-var player: Node
+var player: KinematicBody2D
 
 func _ready() -> void:
 	#set player as owner for name convenience
