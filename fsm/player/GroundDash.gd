@@ -38,6 +38,7 @@ func state_physics(_delta: float) -> void:
 	pass
 
 func state_input(_event: InputEvent) -> void:
+	#try floor checking again when raycast is implemented
 	if _event.is_action_pressed("jump"):
 		state_machine.switch_states("Jump")
 	
