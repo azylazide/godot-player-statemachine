@@ -19,6 +19,7 @@ func exit() -> Dictionary:
 	return _state_info
 
 func state_physics(_delta: float) -> void:
+	player.prior_grounded()
 	player.apply_movement()
 	player.after_grounded()
 	
@@ -28,8 +29,19 @@ func state_physics(_delta: float) -> void:
 				state_machine.switch_states("Run")
 			else:
 				state_machine.switch_states("Idle")
-		else:
+		elif not player.on_floor and player.was_on_floor:
+			player.coyote_timer.wait_time = 0.05
+			player.coyote_timer.start()
+		elif not player.on_floor and not player.was_on_floor:
 			state_machine.switch_states("Fall")
 	
 	pass
 
+func state_input(_event: InputEvent) -> void:
+	if _event.is_action_pressed("jump"):
+		state_machine.switch_states("Jump")
+	
+	if _event.is_action_pressed("dash"):
+		if player.dash_cooldown.is_stopped():
+			player.dash_cooldown.start()
+			state_machine.switch_states("GDash")

@@ -13,6 +13,7 @@ func _ready() -> void:
 func state_physics(_delta: float) -> void:
 	player.apply_gravity(_delta)
 	player.calculate_velocity()
+	player.prior_grounded()
 	player.apply_movement()
 	player.after_grounded()
 	pass

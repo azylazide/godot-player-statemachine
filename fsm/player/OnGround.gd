@@ -16,8 +16,4 @@ func state_input(_event: InputEvent) -> void:
 			state_machine.switch_states("GDash")
 
 func state_physics(_delta: float) -> void:
-	player.apply_gravity(_delta)
-	player.calculate_velocity()
-	player.prior_grounded()
-	player.apply_movement()
-	player.after_grounded()
+	.state_physics(_delta)

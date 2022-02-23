@@ -17,8 +17,8 @@ func state_physics(_delta: float) -> void:
 	pass
 
 func state_input(_event: InputEvent) -> void:
-	if _event.is_action_released("jump"):
-		player.velocity.y = 0
+	if _event.is_action_released("jump") and player.velocity.y < player.min_jump_force:
+		player.velocity.y = player.min_jump_force
 		state_machine.switch_states("Fall")
 	
 	.state_input(_event)

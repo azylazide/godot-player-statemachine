@@ -8,6 +8,7 @@ export(float) var MAX_WALK_TILE = 6.25
 
 var velocity = Vector2.ZERO
 var jump_force: float
+var min_jump_force: float
 var dash_force: float
 var direction: float
 var face_direction: float
@@ -43,6 +44,7 @@ func _ready() -> void:
 	fall_grav = _fall_gravity()
 	#calculate jump constant
 	jump_force = -_jump_vel()
+	min_jump_force = -_jump_vel(0.5,_gap_length/2.0)
 	#calculate dash constant
 	dash_force = _dash_speed()
 	
@@ -53,6 +55,8 @@ func _ready() -> void:
 	
 	dash_cooldown.wait_time = dash_cooldown_time
 	coyote_timer.wait_time = coyote_time
+# warning-ignore:return_value_discarded
+	coyote_timer.connect("timeout",self,"_reset_coyote_time")
 	jump_bufferer.wait_time = jump_buffer
 	
 	pass
@@ -66,7 +70,10 @@ func apply_gravity(delta) -> void:
 		velocity.y = 0
 		return
 	
-	velocity.y += jump_grav*delta
+	if velocity.y < 0:
+		velocity.y += jump_grav*delta
+	else:
+		velocity.y += fall_grav*delta
 	#terminal velocity
 	velocity.y = min(velocity.y,MAX_FALL)
 
@@ -96,6 +103,8 @@ func after_grounded() -> void:
 func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()
 
+func _reset_coyote_time() -> void:
+	coyote_timer.wait_time = coyote_time
 
 #movement parameter calculations
 
@@ -104,11 +113,11 @@ func _jump_gravity() -> float:
 	return output
 
 func _fall_gravity() -> float:
-	var output = 2*(_jump_height*_tile_units)/(_gap_length*_tile_units)
+	var output = 2*(_jump_height*_tile_units*pow(MAX_WALK_TILE*_tile_units,2))/(pow(0.8*_gap_length*_tile_units/2.0,2))
 	return output
 
-func _jump_vel() -> float:
-	var output = (2*_jump_height*_tile_units*MAX_WALK_TILE*_tile_units)/(_gap_length*_tile_units/2.0)
+func _jump_vel(h: float = _jump_height, x: float = _gap_length) -> float:
+	var output = (2*h*_tile_units*MAX_WALK_TILE*_tile_units)/(x*_tile_units/2.0)
 	return output
 
 func _dash_speed() -> float:
