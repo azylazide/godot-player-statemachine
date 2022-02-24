@@ -90,9 +90,6 @@ tracks/1/keys = {
 
 [node name="world" type="Node"]
 
-[node name="player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 234, 51 )
-
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
 collision_mask = 2
@@ -105,6 +102,9 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource( 3 )
+
+[node name="player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 234, 51 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "moving_platform"

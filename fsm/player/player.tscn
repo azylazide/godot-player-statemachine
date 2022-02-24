@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://fsm/player/Statemachine.gd" type="Script" id=1]
 [ext_resource path="res://fsm/player/OnGround.gd" type="Script" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://fsm/player/GroundDash.gd" type="Script" id=10]
 [ext_resource path="res://fsm/player/AirDash.gd" type="Script" id=11]
 [ext_resource path="res://fsm/player/Death.gd" type="Script" id=12]
+[ext_resource path="res://fsm/player/OnWall.gd" type="Script" id=13]
+[ext_resource path="res://fsm/player/WallCling.gd" type="Script" id=14]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25, 60 )
@@ -24,45 +26,51 @@ script = ExtResource( 6 )
 position = Vector2( 0, -60 )
 shape = SubResource( 1 )
 
-[node name="MovementSM" type="Node" parent="."]
+[node name="MainSM" type="Node" parent="."]
 script = ExtResource( 1 )
 state_group = "PlayerStates"
 init_state = NodePath("MovementStates/OnGround/Idle")
 
-[node name="MovementStates" type="Node" parent="MovementSM"]
+[node name="MovementStates" type="Node" parent="MainSM"]
 script = ExtResource( 9 )
 
-[node name="OnGround" type="Node" parent="MovementSM/MovementStates"]
+[node name="OnGround" type="Node" parent="MainSM/MovementStates"]
 script = ExtResource( 2 )
 
-[node name="Idle" type="Node" parent="MovementSM/MovementStates/OnGround" groups=["PlayerStates"]]
+[node name="Idle" type="Node" parent="MainSM/MovementStates/OnGround" groups=["PlayerStates"]]
 script = ExtResource( 3 )
 
-[node name="Run" type="Node" parent="MovementSM/MovementStates/OnGround" groups=["PlayerStates"]]
+[node name="Run" type="Node" parent="MainSM/MovementStates/OnGround" groups=["PlayerStates"]]
 script = ExtResource( 5 )
 
-[node name="GDash" type="Node" parent="MovementSM/MovementStates/OnGround" groups=["PlayerStates"]]
+[node name="GDash" type="Node" parent="MainSM/MovementStates/OnGround" groups=["PlayerStates"]]
 script = ExtResource( 10 )
 
-[node name="Timer" type="Timer" parent="MovementSM/MovementStates/OnGround/GDash"]
+[node name="Timer" type="Timer" parent="MainSM/MovementStates/OnGround/GDash"]
 one_shot = true
 
-[node name="OnAir" type="Node" parent="MovementSM/MovementStates"]
+[node name="OnAir" type="Node" parent="MainSM/MovementStates"]
 script = ExtResource( 4 )
 
-[node name="Jump" type="Node" parent="MovementSM/MovementStates/OnAir" groups=["PlayerStates"]]
+[node name="Jump" type="Node" parent="MainSM/MovementStates/OnAir" groups=["PlayerStates"]]
 script = ExtResource( 7 )
 
-[node name="Fall" type="Node" parent="MovementSM/MovementStates/OnAir" groups=["PlayerStates"]]
+[node name="Fall" type="Node" parent="MainSM/MovementStates/OnAir" groups=["PlayerStates"]]
 script = ExtResource( 8 )
 
-[node name="ADash" type="Node" parent="MovementSM/MovementStates/OnAir" groups=["PlayerStates"]]
+[node name="ADash" type="Node" parent="MainSM/MovementStates/OnAir" groups=["PlayerStates"]]
 script = ExtResource( 11 )
 
-[node name="Timer" type="Timer" parent="MovementSM/MovementStates/OnAir/ADash"]
+[node name="Timer" type="Timer" parent="MainSM/MovementStates/OnAir/ADash"]
 one_shot = true
 
-[node name="Death" type="Node" parent="MovementSM" groups=["PlayerStates"]]
+[node name="OnWall" type="Node" parent="MainSM/MovementStates"]
+script = ExtResource( 13 )
+
+[node name="WallCling" type="Node" parent="MainSM/MovementStates/OnWall"]
+script = ExtResource( 14 )
+
+[node name="Death" type="Node" parent="MainSM" groups=["PlayerStates"]]
 script = ExtResource( 12 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -71,9 +79,9 @@ current = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 margin_left = -23.0
-margin_top = -215.0
+margin_top = -274.0
 margin_right = 62.0
-margin_bottom = -147.0
+margin_bottom = -152.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -112,6 +120,18 @@ text = "null"
 margin_top = 72.0
 margin_right = 85.0
 margin_bottom = 86.0
+text = "null"
+
+[node name="Label6" type="Label" parent="VBoxContainer"]
+margin_top = 90.0
+margin_right = 85.0
+margin_bottom = 104.0
+text = "null"
+
+[node name="Label7" type="Label" parent="VBoxContainer"]
+margin_top = 108.0
+margin_right = 85.0
+margin_bottom = 122.0
 text = "null"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

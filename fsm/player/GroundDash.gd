@@ -27,6 +27,7 @@ func state_physics(_delta: float) -> void:
 		player.velocity.y = 0.0
 	player.apply_movement()
 	player.after_grounded()
+	player.wall_collision()
 	
 	#shorter coyote time
 	if not player.on_floor and player.was_on_floor:

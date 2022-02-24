@@ -16,6 +16,7 @@ func state_physics(_delta: float) -> void:
 	player.prior_grounded()
 	player.apply_movement()
 	player.after_grounded()
+	player.wall_collision()
 	pass
 
 #

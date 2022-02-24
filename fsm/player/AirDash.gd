@@ -20,6 +20,7 @@ func exit() -> Dictionary:
 func state_physics(_delta: float) -> void:
 	player.apply_movement()
 	player.after_grounded()
+	player.wall_collision()
 	
 	if timer.is_stopped():
 		if player.on_floor:

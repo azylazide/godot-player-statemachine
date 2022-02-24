@@ -26,6 +26,7 @@ var jump_grav: float
 var fall_grav: float
 var on_floor: bool
 var was_on_floor: bool
+var on_wall: bool
 
 onready var dash_cooldown:= $DashCooldown
 
@@ -36,6 +37,8 @@ onready var coyote_timer:= $CoyoteTime
 var can_ajump:= true
 
 onready var jump_bufferer:= $JumpBufferTime
+
+var can_wcling:= false
 
 func _ready() -> void:
 	#calculate gravity constant
@@ -50,6 +53,7 @@ func _ready() -> void:
 	#initialize values
 	on_floor = is_on_floor()
 	was_on_floor = is_on_floor()
+	on_wall = false
 	face_direction = 1.0
 	
 	dash_cooldown.wait_time = DASH_COOLDOWN_TIME
@@ -102,8 +106,15 @@ func after_grounded() -> void:
 	on_floor = floor_check()
 	pass
 
+func wall_collision() -> void:
+	on_wall = wall_check()
+
 func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()
+
+func wall_check() -> bool:
+	#change to raycast to check type of wall
+	return is_on_wall()
 
 func _reset_coyote_time() -> void:
 	coyote_timer.wait_time = COYOTE_TIME
@@ -124,4 +135,4 @@ func _dash_speed() -> float:
 #debug
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug_esc"):
-		$MovementSM.switch_states("Death")
+		$MainSM.switch_states("Death")

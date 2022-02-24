@@ -16,5 +16,7 @@ func state_input(_event: InputEvent) -> void:
 			state_machine.switch_states("ADash")
 
 	if _event.is_action_pressed("jump"):
-		player.jump_bufferer.start()
+		if player.velocity.y > 0:
+			player.jump_bufferer.start()
+		
 		pass
