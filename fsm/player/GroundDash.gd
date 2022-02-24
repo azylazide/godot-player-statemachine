@@ -5,7 +5,7 @@ var timer: Timer
 
 func _ready() -> void:
 	timer = $Timer
-	timer.wait_time = player._dash_time
+	timer.wait_time = player.DASH_TIME
 
 func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
@@ -19,10 +19,12 @@ func exit() -> Dictionary:
 
 func state_physics(_delta: float) -> void:
 	player.prior_grounded()
+	#keep player on floor when on floor
 	if player.on_floor and player.was_on_floor:
 		player.apply_gravity(_delta)
+	#disable gravity when not on floor; NOTE: will not be in line with same y level
 	else:
-		player.velocity.y = 0.0	
+		player.velocity.y = 0.0
 	player.apply_movement()
 	player.after_grounded()
 	
@@ -42,7 +44,6 @@ func state_physics(_delta: float) -> void:
 	pass
 
 func state_input(_event: InputEvent) -> void:
-	#try floor checking again when raycast is implemented
 	if _event.is_action_pressed("jump") and not player.coyote_timer.is_stopped():
 		state_machine.switch_states("Jump")
 	

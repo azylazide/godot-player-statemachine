@@ -2,9 +2,13 @@ extends KinematicBody2D
 
 #player controller script
 
-export(float) var MAX_RUN = 800
-export(float) var MAX_FALL = 1000
+export(float) var MAX_FALL_TILE = 15.0
 export(float) var MAX_WALK_TILE = 6.25
+export(float) var JUMP_HEIGHT = 5.5
+export(float) var MIN_JUMP_HEIGHT = 0.5
+export(float) var DASH_LENGTH = 5.0
+export(float) var DASH_TIME = 0.2
+export(float) var GAP_LENGTH = 12.5
 
 var velocity = Vector2.ZERO
 var jump_force: float
@@ -14,13 +18,6 @@ var direction: float
 var face_direction: float
 
 var _tile_units:= 64.0 #px/tile
-var _jump_height:= 5.5
-var _min_jump_height:= 0.5
-var _gap_length:= 12.5
-var _jump_time:= 0.8
-var _fall_time:= 0.8
-var _dash_length:= 5.0
-var _dash_time:= 0.2
 
 var jump_grav: float
 var fall_grav: float
@@ -41,11 +38,11 @@ var jump_buffer:= 0.1
 
 func _ready() -> void:
 	#calculate gravity constant
-	jump_grav = _gravity(_jump_height,MAX_WALK_TILE,_gap_length)
-	fall_grav = _gravity(1.5*_jump_height,MAX_WALK_TILE,0.8*_gap_length)
+	jump_grav = _gravity(JUMP_HEIGHT,MAX_WALK_TILE,GAP_LENGTH)
+	fall_grav = _gravity(1.5*JUMP_HEIGHT,MAX_WALK_TILE,0.8*GAP_LENGTH)
 	#calculate jump constant
-	jump_force = -_jump_vel(_jump_height,_gap_length)
-	min_jump_force = -_jump_vel(_min_jump_height,_gap_length/2.0)
+	jump_force = -_jump_vel(JUMP_HEIGHT,GAP_LENGTH)
+	min_jump_force = -_jump_vel(MIN_JUMP_HEIGHT,GAP_LENGTH/2.0)
 	#calculate dash constant
 	dash_force = _dash_speed()
 	
@@ -79,7 +76,7 @@ func apply_gravity(delta) -> void:
 		velocity.y += fall_grav*delta
 		
 	#terminal velocity
-	velocity.y = min(velocity.y,MAX_FALL)
+	velocity.y = min(velocity.y,MAX_FALL_TILE*_tile_units)
 
 func calculate_velocity() -> void:
 	direction = get_direction()
@@ -121,7 +118,7 @@ func _jump_vel(h: float, x: float) -> float:
 	return output
 
 func _dash_speed() -> float:
-	return _dash_length*_tile_units/_dash_time
+	return DASH_LENGTH*_tile_units/DASH_TIME
 
 #debug
 func _unhandled_input(event: InputEvent) -> void:

@@ -5,7 +5,7 @@ var timer: Timer
 
 func _ready() -> void:
 	timer = $Timer
-	timer.wait_time = player._dash_time
+	timer.wait_time = player.DASH_TIME
 
 func enter(_prev_info:={}) -> void:
 	#apply dash and cancel gravity
