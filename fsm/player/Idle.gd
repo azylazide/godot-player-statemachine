@@ -18,7 +18,7 @@ func state_input(_event: InputEvent) -> void:
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	
-	if player.velocity.x != 0:
+	if player.get_direction() != 0:
 		state_machine.switch_states("Run")
 	
 	#start coyote time

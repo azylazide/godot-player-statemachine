@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://fsm/player/Statemachine.gd" type="Script" id=1]
 [ext_resource path="res://fsm/player/OnGround.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://fsm/player/player_state.gd" type="Script" id=9]
 [ext_resource path="res://fsm/player/GroundDash.gd" type="Script" id=10]
 [ext_resource path="res://fsm/player/AirDash.gd" type="Script" id=11]
+[ext_resource path="res://fsm/player/Death.gd" type="Script" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25, 60 )
@@ -60,6 +61,9 @@ script = ExtResource( 11 )
 
 [node name="Timer" type="Timer" parent="MovementSM/MovementStates/OnAir/ADash"]
 one_shot = true
+
+[node name="Death" type="Node" parent="MovementSM" groups=["PlayerStates"]]
+script = ExtResource( 12 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 0, -65 )
@@ -111,6 +115,7 @@ margin_bottom = 86.0
 text = "null"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+cast_to = Vector2( 0, 2 )
 
 [node name="DashCooldown" type="Timer" parent="."]
 one_shot = true

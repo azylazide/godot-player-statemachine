@@ -40,8 +40,8 @@ var jump_buffer:= 0.1
 
 func _ready() -> void:
 	#calculate gravity constant
-	jump_grav = _jump_gravity()
-	fall_grav = _fall_gravity()
+	jump_grav = _gravity(_jump_height,MAX_WALK_TILE,_gap_length)
+	fall_grav = _gravity(1.5*_jump_height,MAX_WALK_TILE,0.8*_gap_length)
 	#calculate jump constant
 	jump_force = -_jump_vel()
 	min_jump_force = -_jump_vel(0.5,_gap_length/2.0)
@@ -70,10 +70,13 @@ func apply_gravity(delta) -> void:
 		velocity.y = 0
 		return
 	
+	#apply normal gravity for jump
 	if velocity.y < 0:
 		velocity.y += jump_grav*delta
+	#apply larger gravity for fall
 	else:
 		velocity.y += fall_grav*delta
+		
 	#terminal velocity
 	velocity.y = min(velocity.y,MAX_FALL)
 
@@ -108,12 +111,8 @@ func _reset_coyote_time() -> void:
 
 #movement parameter calculations
 
-func _jump_gravity() -> float:
-	var output = 2*(_jump_height*_tile_units*pow(MAX_WALK_TILE*_tile_units,2))/(pow(_gap_length*_tile_units/2.0,2))
-	return output
-
-func _fall_gravity() -> float:
-	var output = 2*(1.5*_jump_height*_tile_units*pow(MAX_WALK_TILE*_tile_units,2))/(pow(0.8*_gap_length*_tile_units/2.0,2))
+func _gravity(h: float, vx: float, x: float) -> float:
+	var output = 2*(h*_tile_units*pow(vx*_tile_units,2))/(pow(x*_tile_units/2.0,2))
 	return output
 
 func _jump_vel(h: float = _jump_height, x: float = _gap_length) -> float:
@@ -122,3 +121,8 @@ func _jump_vel(h: float = _jump_height, x: float = _gap_length) -> float:
 
 func _dash_speed() -> float:
 	return _dash_length*_tile_units/_dash_time
+
+#debug
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug_esc"):
+		$MovementSM.switch_states("Death")
