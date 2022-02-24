@@ -28,6 +28,7 @@ func state_physics(_delta: float) -> void:
 	player.apply_movement()
 	player.after_grounded()
 	
+	#shorter coyote time
 	if not player.on_floor and player.was_on_floor:
 		player.coyote_timer.wait_time = 0.08
 		player.coyote_timer.start()
@@ -44,7 +45,7 @@ func state_physics(_delta: float) -> void:
 	pass
 
 func state_input(_event: InputEvent) -> void:
-	if _event.is_action_pressed("jump") and not player.coyote_timer.is_stopped():
+	if _event.is_action_pressed("jump") and (not player.coyote_timer.is_stopped() or player.on_floor):
 		state_machine.switch_states("Jump")
 	
 	if _event.is_action_pressed("dash"):

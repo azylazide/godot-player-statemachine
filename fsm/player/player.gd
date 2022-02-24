@@ -4,10 +4,13 @@ extends KinematicBody2D
 
 export(float) var MAX_FALL_TILE = 15.0
 export(float) var MAX_WALK_TILE = 6.25
+export(float) var COYOTE_TIME = 0.1
 export(float) var JUMP_HEIGHT = 5.5
 export(float) var MIN_JUMP_HEIGHT = 0.5
+export(float) var JUMP_BUFFER_TIME = 0.1
 export(float) var DASH_LENGTH = 5.0
 export(float) var DASH_TIME = 0.2
+export(float) var DASH_COOLDOWN_TIME = 0.3
 export(float) var GAP_LENGTH = 12.5
 
 var velocity = Vector2.ZERO
@@ -25,16 +28,14 @@ var on_floor: bool
 var was_on_floor: bool
 
 onready var dash_cooldown:= $DashCooldown
-var dash_cooldown_time := 0.3
+
 var can_adash:= true
 
 onready var coyote_timer:= $CoyoteTime 
-var coyote_time:= 0.1
 
 var can_ajump:= true
 
 onready var jump_bufferer:= $JumpBufferTime
-var jump_buffer:= 0.1
 
 func _ready() -> void:
 	#calculate gravity constant
@@ -51,11 +52,11 @@ func _ready() -> void:
 	was_on_floor = is_on_floor()
 	face_direction = 1.0
 	
-	dash_cooldown.wait_time = dash_cooldown_time
-	coyote_timer.wait_time = coyote_time
+	dash_cooldown.wait_time = DASH_COOLDOWN_TIME
+	coyote_timer.wait_time = COYOTE_TIME
 # warning-ignore:return_value_discarded
 	coyote_timer.connect("timeout",self,"_reset_coyote_time")
-	jump_bufferer.wait_time = jump_buffer
+	jump_bufferer.wait_time = JUMP_BUFFER_TIME
 	
 	pass
 
@@ -105,7 +106,7 @@ func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()
 
 func _reset_coyote_time() -> void:
-	coyote_timer.wait_time = coyote_time
+	coyote_timer.wait_time = COYOTE_TIME
 
 #movement parameter calculations
 
