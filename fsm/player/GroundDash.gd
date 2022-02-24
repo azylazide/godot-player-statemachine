@@ -11,7 +11,6 @@ func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 	#apply dash
 	player.velocity.x = player.dash_force*player.face_direction
-	player.velocity.y = 0.0
 	timer.start()
 	pass
 
@@ -20,6 +19,10 @@ func exit() -> Dictionary:
 
 func state_physics(_delta: float) -> void:
 	player.prior_grounded()
+	if player.on_floor and player.was_on_floor:
+		player.apply_gravity(_delta)
+	else:
+		player.velocity.y = 0.0	
 	player.apply_movement()
 	player.after_grounded()
 	
@@ -30,7 +33,7 @@ func state_physics(_delta: float) -> void:
 			else:
 				state_machine.switch_states("Idle")
 		elif not player.on_floor and player.was_on_floor:
-			player.coyote_timer.wait_time = 0.08
+			player.coyote_timer.wait_time = 10.0
 			player.coyote_timer.start()
 		elif not player.on_floor and not player.was_on_floor:
 			state_machine.switch_states("Fall")

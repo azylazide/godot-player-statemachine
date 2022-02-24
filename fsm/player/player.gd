@@ -15,6 +15,7 @@ var face_direction: float
 
 var _tile_units:= 64.0 #px/tile
 var _jump_height:= 5.5
+var _min_jump_height:= 0.5
 var _gap_length:= 12.5
 var _jump_time:= 0.8
 var _fall_time:= 0.8
@@ -43,8 +44,8 @@ func _ready() -> void:
 	jump_grav = _gravity(_jump_height,MAX_WALK_TILE,_gap_length)
 	fall_grav = _gravity(1.5*_jump_height,MAX_WALK_TILE,0.8*_gap_length)
 	#calculate jump constant
-	jump_force = -_jump_vel()
-	min_jump_force = -_jump_vel(0.5,_gap_length/2.0)
+	jump_force = -_jump_vel(_jump_height,_gap_length)
+	min_jump_force = -_jump_vel(_min_jump_height,_gap_length/2.0)
 	#calculate dash constant
 	dash_force = _dash_speed()
 	
@@ -115,7 +116,7 @@ func _gravity(h: float, vx: float, x: float) -> float:
 	var output = 2*(h*_tile_units*pow(vx*_tile_units,2))/(pow(x*_tile_units/2.0,2))
 	return output
 
-func _jump_vel(h: float = _jump_height, x: float = _gap_length) -> float:
+func _jump_vel(h: float, x: float) -> float:
 	var output = (2*h*_tile_units*MAX_WALK_TILE*_tile_units)/(x*_tile_units/2.0)
 	return output
 
