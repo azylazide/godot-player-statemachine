@@ -1,6 +1,8 @@
 extends "res://fsm/player/OnAir.gd"
 
 func enter(_prev_info:={}) -> void:
+	.enter(_prev_info)
+	player.floor_snap = false
 	player.coyote_timer.stop()
 	player.velocity.y = player.jump_force
 	pass

@@ -2,7 +2,7 @@ extends "res://fsm/player/player_state.gd"
 
 #functions and variables for anything while on air
 
-func _ready() -> void:
+func enter(_state_info:={}) -> void:
 	pass
 
 func state_physics(_delta: float) -> void:

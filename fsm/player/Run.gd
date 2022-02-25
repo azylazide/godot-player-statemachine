@@ -12,7 +12,7 @@ func _ready() -> void:
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	
-	if abs(player.velocity.x) < 0.1 and player.on_floor:
+	if player.get_direction() == 0 and player.on_floor:
 		state_machine.switch_states("Idle")
 	
 	#start coyote time

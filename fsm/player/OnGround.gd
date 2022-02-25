@@ -6,6 +6,7 @@ func enter(_prev_info:={}) -> void:
 	#reset air dash bool when on ground
 	player.can_adash = true
 	player.can_ajump = true
+	player.floor_snap = true
 
 func state_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("jump"):

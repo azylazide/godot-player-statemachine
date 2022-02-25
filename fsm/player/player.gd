@@ -27,6 +27,7 @@ var fall_grav: float
 var on_floor: bool
 var was_on_floor: bool
 var on_wall: bool
+var floor_snap: bool
 
 onready var dash_cooldown:= $DashCooldown
 
@@ -55,6 +56,7 @@ func _ready() -> void:
 	was_on_floor = is_on_floor()
 	on_wall = false
 	face_direction = 1.0
+	floor_snap = true
 	
 	dash_cooldown.wait_time = DASH_COOLDOWN_TIME
 	coyote_timer.wait_time = COYOTE_TIME
@@ -88,7 +90,7 @@ func calculate_velocity() -> void:
 	velocity.x = lerp(velocity.x, MAX_WALK_TILE*_tile_units*direction,0.6)
 	
 func apply_movement() -> void:
-	velocity = move_and_slide(velocity,Vector2.UP)
+	velocity = move_and_slide_with_snap(velocity,is_floor_snap(),Vector2.UP)
 	
 	#save face direction; updates to last direction
 	if direction == 0:
@@ -115,6 +117,13 @@ func floor_check() -> bool:
 func wall_check() -> bool:
 	#change to raycast to check type of wall
 	return is_on_wall()
+
+func is_floor_snap() -> Vector2:
+	var output:= Vector2.DOWN
+	if floor_snap:
+		return output
+	else:
+		return Vector2.ZERO
 
 func _reset_coyote_time() -> void:
 	coyote_timer.wait_time = COYOTE_TIME

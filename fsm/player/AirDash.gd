@@ -8,6 +8,7 @@ func _ready() -> void:
 	timer.wait_time = player.DASH_TIME
 
 func enter(_prev_info:={}) -> void:
+	.enter(_prev_info)
 	#apply dash and cancel gravity
 	player.velocity.x = player.dash_force*player.face_direction
 	player.velocity.y = 0.0

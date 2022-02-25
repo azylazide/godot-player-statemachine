@@ -4,9 +4,6 @@ extends "res://fsm/player/OnAir.gd"
 func _ready() -> void:
 	pass
 
-func enter(_state_info:={}) -> void:
-	pass
-
 func exit() -> Dictionary:
 	return _state_info
 

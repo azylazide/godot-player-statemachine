@@ -39,7 +39,7 @@ func _physics_process(_delta: float) -> void:
 
 #handle switching of states
 func switch_states(_new_state: String) -> void:
-	#_debug_print_state(current_state,_new_state)
+	_debug_print_state(current_state,_new_state)
 	
 	#double-check if it is in dict
 	if not state_dict.has(_new_state):
