@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://fsm/player/Statemachine.gd" type="Script" id=1]
 [ext_resource path="res://fsm/player/OnGround.gd" type="Script" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://fsm/player/Death.gd" type="Script" id=12]
 [ext_resource path="res://fsm/player/OnWall.gd" type="Script" id=13]
 [ext_resource path="res://fsm/player/WallCling.gd" type="Script" id=14]
+[ext_resource path="res://fsm/player/FloorRayCast.gd" type="Script" id=15]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 25, 60 )
@@ -146,8 +147,12 @@ margin_right = 85.0
 margin_bottom = 158.0
 text = "null"
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-cast_to = Vector2( 0, 2 )
+[node name="FloorRayCast" type="Position2D" parent="."]
+script = ExtResource( 15 )
+
+[node name="RayCast2D" type="RayCast2D" parent="FloorRayCast"]
+enabled = true
+cast_to = Vector2( 0, 20 )
 
 [node name="DashCooldown" type="Timer" parent="."]
 one_shot = true

@@ -41,6 +41,8 @@ onready var jump_bufferer:= $JumpBufferTime
 
 var can_wcling:= false
 
+onready var floor_cast:= $FloorRayCast
+
 func _ready() -> void:
 	#calculate gravity constant
 	jump_grav = _gravity(JUMP_HEIGHT,MAX_WALK_TILE,GAP_LENGTH)
@@ -112,7 +114,18 @@ func wall_collision() -> void:
 	on_wall = wall_check()
 
 func floor_check() -> bool:
-	return is_on_floor() or not coyote_timer.is_stopped()
+	var output: bool
+	if floor_cast.collider is TileMap:
+		if floor_cast.collider.collision_layer == 1:
+			output = true
+		else:
+			output = false
+	elif floor_cast.collider is PhysicsBody2D:
+		if floor_cast.collider.layers == 1:
+			output = true
+		else:
+			output = false
+	return output or not coyote_timer.is_stopped()
 
 func wall_check() -> bool:
 	#change to raycast to check type of wall
