@@ -30,18 +30,17 @@ var on_wall: bool
 var floor_snap: bool
 
 onready var dash_cooldown:= $DashCooldown
-
 var can_adash:= true
 
 onready var coyote_timer:= $CoyoteTime 
-
 var can_ajump:= true
 
 onready var jump_bufferer:= $JumpBufferTime
-
 var can_wcling:= false
 
 onready var floor_cast:= $FloorRayCast
+
+const SLOPE_STOP_THRESHOLD:= 100.0
 
 func _ready() -> void:
 	#calculate gravity constant
@@ -92,7 +91,11 @@ func calculate_velocity() -> void:
 	velocity.x = lerp(velocity.x, MAX_WALK_TILE*_tile_units*direction,0.6)
 	
 func apply_movement() -> void:
-	velocity = move_and_slide_with_snap(velocity,is_floor_snap(),Vector2.UP)
+	if direction == 0 and abs(velocity.x) < SLOPE_STOP_THRESHOLD:
+		velocity.x = 0
+	var stop_on_slope:= true if get_floor_velocity().x == 0 else false
+	
+	velocity = move_and_slide_with_snap(velocity,is_floor_snap(),Vector2.UP,stop_on_slope)
 	
 	#save face direction; updates to last direction
 	if direction == 0:
@@ -132,7 +135,7 @@ func wall_check() -> bool:
 	return is_on_wall()
 
 func is_floor_snap() -> Vector2:
-	var output:= Vector2.DOWN*32
+	var output:= Vector2.DOWN*43
 	if floor_snap:
 		return output
 	else:
