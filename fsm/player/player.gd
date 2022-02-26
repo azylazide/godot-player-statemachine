@@ -114,17 +114,17 @@ func wall_collision() -> void:
 	on_wall = wall_check()
 
 func floor_check() -> bool:
-	var output:= is_on_floor()
-#	if floor_cast.collider is TileMap:
-#		if floor_cast.collider.collision_layer == 1:
-#			output = true
-#		else:
-#			output = false
-#	elif floor_cast.collider is PhysicsBody2D:
-#		if floor_cast.collider.layers == 1:
-#			output = true
-#		else:
-#			output = false
+	var output: bool
+	if floor_cast.collider is TileMap:
+		if floor_cast.collider.collision_layer == 1:
+			output = true
+		else:
+			output = false
+	elif floor_cast.collider is PhysicsBody2D:
+		if floor_cast.collider.layers == 1:
+			output = true
+		else:
+			output = false
 	return output or not coyote_timer.is_stopped()
 
 func wall_check() -> bool:
