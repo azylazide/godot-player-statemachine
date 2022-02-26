@@ -2,15 +2,21 @@ extends Position2D
 
 const IDLE_DURATION := 1.0
 
-export var move_to := Vector2.UP * 5*64
-export var speed := 2.0*64
+export var MOVE_TO := Vector2.UP*10
+export var SPEED := 3.0
+
+var tile_units:= 64
 
 var follow:= Vector2.ZERO
+var move_to: Vector2
+var speed: float
 
 onready var moving_platform := $plat1
 onready var plat_tween:= $Tween
 
 func _ready() -> void:
+	move_to = MOVE_TO*tile_units
+	speed = SPEED*tile_units
 	_init_tween()
 	
 func _init_tween() -> void:
