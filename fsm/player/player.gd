@@ -132,7 +132,7 @@ func wall_check() -> bool:
 	return is_on_wall()
 
 func is_floor_snap() -> Vector2:
-	var output:= Vector2.DOWN
+	var output:= Vector2.DOWN*32
 	if floor_snap:
 		return output
 	else:
