@@ -125,7 +125,7 @@ func floor_check() -> bool:
 			output = true
 		else:
 			output = false
-	return output or not coyote_timer.is_stopped()
+	return is_on_floor() or not coyote_timer.is_stopped()
 
 func wall_check() -> bool:
 	#change to raycast to check type of wall

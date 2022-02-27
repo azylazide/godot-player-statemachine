@@ -7,7 +7,7 @@ export var speed := 2.0*64
 
 var follow:= Vector2.ZERO
 
-onready var moving_platform := $plat1
+onready var moving_platform := $PlatformBody
 onready var plat_tween:= $Tween
 
 func _ready() -> void:
