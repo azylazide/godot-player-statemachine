@@ -91,11 +91,8 @@ func calculate_velocity() -> void:
 	velocity.x = lerp(velocity.x, MAX_WALK_TILE*_tile_units*direction,0.6)
 	
 func apply_movement() -> void:
-	if direction == 0 and abs(velocity.x) < SLOPE_STOP_THRESHOLD:
-		velocity.x = 0
-	var stop_on_slope:= true if get_floor_velocity().x == 0 else false
-	
-	velocity = move_and_slide_with_snap(velocity,is_floor_snap(),Vector2.UP,stop_on_slope)
+
+	velocity = move_and_slide_with_snap(velocity,is_floor_snap(),Vector2.UP)
 	
 	#save face direction; updates to last direction
 	if direction == 0:
