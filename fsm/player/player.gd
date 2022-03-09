@@ -136,7 +136,7 @@ func wall_check() -> bool:
 		wall_normal = left_raycast.get_collision_normal()
 		return true
 	elif right_raycast.is_colliding():
-		wall_normal = left_raycast.get_collision_normal()
+		wall_normal = right_raycast.get_collision_normal()
 		return true
 	else:
 		return false

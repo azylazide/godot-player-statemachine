@@ -9,7 +9,10 @@ func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	
 	if player.on_wall:
-		if player.get_direction().normalized() == -player.wall_normal.normalized():
+		var direction = player.get_direction()
+		if direction != 0:
+			if direction*player.wall_normal.x < 0:
+				print("wall clingable")
 			pass
 
 func state_input(_event: InputEvent) -> void:
