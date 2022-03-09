@@ -13,7 +13,7 @@ export(float) var DASH_TIME = 0.2
 export(float) var DASH_COOLDOWN_TIME = 0.3
 export(float) var GAP_LENGTH = 12.5
 
-var velocity = Vector2.ZERO
+var velocity:= Vector2.ZERO
 var jump_force: float
 var min_jump_force: float
 var dash_force: float
@@ -28,6 +28,7 @@ var on_floor: bool
 var was_on_floor: bool
 var on_wall: bool
 var floor_snap: bool
+var wall_normal:= Vector2.ZERO
 
 onready var dash_cooldown:= $DashCooldown
 var can_adash:= true
@@ -39,6 +40,9 @@ onready var jump_bufferer:= $JumpBufferTime
 var can_wcling:= false
 
 onready var floor_cast:= $FloorRayCast
+
+onready var left_raycast:= $WallRayCast/LeftRay
+onready var right_raycast:= $WallRayCast/RightRay
 
 const SLOPE_STOP_THRESHOLD:= 100.0
 
@@ -128,8 +132,17 @@ func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()
 
 func wall_check() -> bool:
+	if left_raycast.is_colliding():
+		wall_normal = left_raycast.get_collision_normal()
+		return true
+	elif right_raycast.is_colliding():
+		wall_normal = left_raycast.get_collision_normal()
+		return true
+	else:
+		return false
+	
 	#change to raycast to check type of wall
-	return is_on_wall()
+#	return is_on_wall()
 
 func is_floor_snap() -> Vector2:
 	var output:= Vector2.DOWN*43

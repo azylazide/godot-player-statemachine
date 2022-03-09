@@ -1,9 +1,6 @@
 extends "res://fsm/player/OnAir.gd"
 
 
-func _ready() -> void:
-	pass
-
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	

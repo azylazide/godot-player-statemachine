@@ -7,6 +7,10 @@ func enter(_state_info:={}) -> void:
 
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
+	
+	if player.on_wall:
+		if player.get_direction().normalized() == -player.wall_normal.normalized():
+			pass
 
 func state_input(_event: InputEvent) -> void:
 	if _event.is_action_pressed("dash"):

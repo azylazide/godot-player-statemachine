@@ -1,4 +1,2 @@
-extends State
+extends "res://fsm/player/OnWall.gd"
 
-func _ready() -> void:
-	pass

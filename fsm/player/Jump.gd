@@ -4,8 +4,13 @@ func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 	player.floor_snap = false
 	player.coyote_timer.stop()
-	player.velocity.y = player.jump_force
-	pass
+	
+	if _prev_state.name == "Fall":
+		player.velocity.y = player.jump_force*0.8
+	elif _prev_state.name == "GDash":
+		player.velocity.y = player.jump_force*1.2
+	else:
+		player.velocity.y = player.jump_force
 
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)

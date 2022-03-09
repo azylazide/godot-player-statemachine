@@ -160,6 +160,17 @@ script = ExtResource( 15 )
 enabled = true
 cast_to = Vector2( 0, 20 )
 
+[node name="WallRayCast" type="Position2D" parent="."]
+position = Vector2( 0, -48 )
+
+[node name="LeftRay" type="RayCast2D" parent="WallRayCast"]
+enabled = true
+cast_to = Vector2( -44, 0 )
+
+[node name="RightRay" type="RayCast2D" parent="WallRayCast"]
+enabled = true
+cast_to = Vector2( 44, 0 )
+
 [node name="DashCooldown" type="Timer" parent="."]
 one_shot = true
 
