@@ -4,9 +4,6 @@ func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 	player.velocity.x = 0
 
-func exit() -> Dictionary:
-	return _state_info
-
 func _ready() -> void:
 	print(player)
 	pass

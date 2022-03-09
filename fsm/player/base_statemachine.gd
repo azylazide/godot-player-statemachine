@@ -47,9 +47,11 @@ func switch_states(_new_state: String) -> void:
 	
 	#get info from old state, run its exit function
 	var state_info = current_state.exit()
+	var old_state = current_state
 	#get reference to new state
 	current_state = state_dict[_new_state]
 	#enter new state passing old info
+	current_state._prev_state = old_state
 	current_state.enter(state_info)
 	pass
 
@@ -68,6 +70,7 @@ func _connect_states() -> void:
 #set initial state
 func _initial_state(_s: NodePath) -> void:
 	current_state = get_node(_s)
+	current_state._prev_state = null
 	current_state.enter()
 	pass
 

@@ -7,9 +7,6 @@ func enter(_prev_info:={}) -> void:
 	player.velocity.y = player.jump_force
 	pass
 
-func exit() -> Dictionary:
-	return _state_info
-
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	

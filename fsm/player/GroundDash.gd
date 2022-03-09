@@ -14,9 +14,6 @@ func enter(_prev_info:={}) -> void:
 	timer.start()
 	pass
 
-func exit() -> Dictionary:
-	return _state_info
-
 func state_physics(_delta: float) -> void:
 	player.prior_grounded()
 	#keep player on floor when on floor

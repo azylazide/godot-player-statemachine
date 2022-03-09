@@ -15,9 +15,6 @@ func enter(_prev_info:={}) -> void:
 	timer.start()
 	pass
 
-func exit() -> Dictionary:
-	return _state_info
-
 func state_physics(_delta: float) -> void:
 	player.apply_movement()
 	player.after_grounded()

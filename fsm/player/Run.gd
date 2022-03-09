@@ -3,9 +3,6 @@ extends "res://fsm/player/OnGround.gd"
 func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 
-func exit() -> Dictionary:
-	return _state_info
-
 func _ready() -> void:
 	pass
 

@@ -15,6 +15,7 @@ func _process(_delta: float) -> void:
 	owner.get_node("VBoxContainer/Label7").text = "can_ajump: " + ("true" if owner.can_ajump else "false") + "; can_adash: " + ("true" if owner.can_adash else "false")
 	owner.get_node("VBoxContainer/Label8").text = "x: " + str(owner.position.x) + " y: " + str(owner.position.y)
 	owner.get_node("VBoxContainer/Label9").text = "floor_snap: " + ("true" if owner.floor_snap else "false")
+	owner.get_node("VBoxContainer/Label10").text = "prev state: " + current_state._prev_state.name
 	._process(_delta)
 	pass
 
