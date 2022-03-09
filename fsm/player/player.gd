@@ -132,7 +132,10 @@ func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()
 
 func wall_check() -> bool:
-	if left_raycast.is_colliding():
+	if left_raycast.is_colliding() and right_raycast.is_colliding():
+		wall_normal = Vector2.ZERO
+		return true
+	elif left_raycast.is_colliding():
 		wall_normal = left_raycast.get_collision_normal()
 		return true
 	elif right_raycast.is_colliding():
