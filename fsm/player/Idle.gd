@@ -4,10 +4,6 @@ func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 	player.velocity.x = 0
 
-func _ready() -> void:
-	print(player)
-	pass
-	
 func state_input(_event: InputEvent) -> void:
 	.state_input(_event)
 	pass

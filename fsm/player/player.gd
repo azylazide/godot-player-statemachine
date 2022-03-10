@@ -132,22 +132,27 @@ func floor_check() -> bool:
 	return is_on_floor() or not coyote_timer.is_stopped()
 
 func wall_check() -> bool:
+	
+	#TO DO: check if wall is valid for wall clinging
+	
+	#check if player is close to two walls
 	if left_raycast.is_colliding() and right_raycast.is_colliding():
 		wall_normal = Vector2.ZERO
 		return true
+	#check left
 	elif left_raycast.is_colliding():
 		wall_normal = left_raycast.get_collision_normal()
 		return true
+	#check right
 	elif right_raycast.is_colliding():
 		wall_normal = right_raycast.get_collision_normal()
 		return true
+	#no wall
 	else:
 		return false
-	
-	#change to raycast to check type of wall
-#	return is_on_wall()
 
 func is_floor_snap() -> Vector2:
+	#enable floor snap vector when snap to floor
 	var output:= Vector2.DOWN*43
 	if floor_snap:
 		return output

@@ -3,9 +3,6 @@ extends "res://fsm/player/OnGround.gd"
 func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 
-func _ready() -> void:
-	pass
-
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	
