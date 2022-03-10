@@ -3,17 +3,21 @@ extends "res://fsm/player/OnWall.gd"
 func enter(_prev_info:={}) -> void:
 #	.enter(_prev_info)
 	
+	#halt momentum at start of wall slide
 	player.velocity.x = 0
 	player.velocity.y = 0
 	pass
 
 func state_physics(_delta: float) -> void:
 	
+	#wait a few milliseconds before sticking to wall
+	#player.velocity.x = -(player.wall_normal.x/player.wall_normal.x)*sticking_vel
+	
 	#if player leaves wall by moving away
 	var direction = player.get_direction() 
 	
 	#slowdown custom gravity for sliding
-	player.velocity.y += 0.7*player.fall_grav*_delta
+	player.velocity.y += 0.3*player.fall_grav*_delta
 	#TO DO: change to custom terminal sliding speed
 	player.velocity.y = min(player.velocity.y,player.MAX_FALL_TILE*player._tile_units)
 	

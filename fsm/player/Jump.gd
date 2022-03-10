@@ -12,6 +12,8 @@ func enter(_prev_info:={}) -> void:
 	else:
 		player.velocity.y = player.jump_force
 
+	#apply horizontal velocity if coming from wall cling or a wall jump
+
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
 	
