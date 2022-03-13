@@ -58,3 +58,9 @@ shape = SubResource( 3 )
 repeat = true
 playback_process_mode = 0
 playback/repeat = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( -2112, 0 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, -8, -512, 64, -512, 72, 0 )

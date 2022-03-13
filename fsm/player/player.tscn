@@ -158,18 +158,18 @@ script = ExtResource( 15 )
 
 [node name="RayCast2D" type="RayCast2D" parent="FloorRayCast"]
 enabled = true
-cast_to = Vector2( 0, 20 )
+cast_to = Vector2( 0, 10 )
 
 [node name="WallRayCast" type="Position2D" parent="."]
 position = Vector2( 0, -48 )
 
 [node name="LeftRay" type="RayCast2D" parent="WallRayCast"]
 enabled = true
-cast_to = Vector2( -44, 0 )
+cast_to = Vector2( -30, 0 )
 
 [node name="RightRay" type="RayCast2D" parent="WallRayCast"]
 enabled = true
-cast_to = Vector2( 44, 0 )
+cast_to = Vector2( 30, 0 )
 
 [node name="DashCooldown" type="Timer" parent="."]
 one_shot = true
@@ -178,4 +178,7 @@ one_shot = true
 one_shot = true
 
 [node name="JumpBufferTime" type="Timer" parent="."]
+one_shot = true
+
+[node name="WallClingTime" type="Timer" parent="."]
 one_shot = true

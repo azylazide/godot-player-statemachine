@@ -12,6 +12,7 @@ export(float) var DASH_LENGTH = 5.0
 export(float) var DASH_TIME = 0.2
 export(float) var DASH_COOLDOWN_TIME = 0.3
 export(float) var GAP_LENGTH = 12.5
+export(float) var WALL_COOLDOWN_TIME = 0.2
 
 var velocity:= Vector2.ZERO
 var jump_force: float
@@ -37,10 +38,10 @@ onready var coyote_timer:= $CoyoteTime
 var can_ajump:= true
 
 onready var jump_bufferer:= $JumpBufferTime
-var can_wcling:= false
 
 onready var floor_cast:= $FloorRayCast
 
+onready var wall_cooldown:= $WallClingTime
 onready var left_raycast:= $WallRayCast/LeftRay
 onready var right_raycast:= $WallRayCast/RightRay
 
@@ -68,6 +69,8 @@ func _ready() -> void:
 # warning-ignore:return_value_discarded
 	coyote_timer.connect("timeout",self,"_reset_coyote_time")
 	jump_bufferer.wait_time = JUMP_BUFFER_TIME
+	
+	wall_cooldown.wait_time = WALL_COOLDOWN_TIME
 	
 	pass
 
@@ -144,17 +147,13 @@ func wall_check() -> bool:
 	#check left
 	elif left:
 		wall_normal = left_raycast.get_collision_normal()
-		#check for valid wall angle
-		if atan2(wall_normal.y,wall_normal.x) == 0:
-			return true
-		return false
+		#TO DO: check for valid wall angle
+		return true
 	#check right
 	elif right:
 		wall_normal = right_raycast.get_collision_normal()
-		#check for valid wall angle
-		if atan2(wall_normal.y,wall_normal.x) == 0:
-			return true
-		return false
+		#TO DO: check for valid wall angle
+		return true
 	#no wall
 	else:
 		return false
@@ -173,11 +172,11 @@ func _reset_coyote_time() -> void:
 #movement parameter calculations
 
 func _gravity(h: float, vx: float, x: float) -> float:
-	var output = 2*(h*_tile_units*pow(vx*_tile_units,2))/(pow(x*_tile_units/2.0,2))
+	var output: float = 2*(h*_tile_units*pow(vx*_tile_units,2))/(pow(x*_tile_units/2.0,2))
 	return output
 
 func _jump_vel(h: float, x: float) -> float:
-	var output = (2*h*_tile_units*MAX_WALK_TILE*_tile_units)/(x*_tile_units/2.0)
+	var output: float = (2*h*_tile_units*MAX_WALK_TILE*_tile_units)/(x*_tile_units/2.0)
 	return output
 
 func _dash_speed() -> float:

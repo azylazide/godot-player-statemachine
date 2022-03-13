@@ -1,5 +1,8 @@
 extends "res://fsm/player/OnAir.gd"
 
+func enter(_prev_info:={}) -> void:
+	.enter(_prev_info)
+	player.wall_cooldown.stop()
 
 func state_physics(_delta: float) -> void:
 	.state_physics(_delta)
@@ -8,8 +11,8 @@ func state_physics(_delta: float) -> void:
 	if player.on_wall:
 		var direction = player.get_direction()
 		if direction != 0:
-			if player.wall_normal != Vector2.ZERO and direction*player.wall_normal.x < 0:
-#				print("wall clingable")
+			if player.wall_normal != Vector2.ZERO and direction*player.wall_normal.x < 0 and player.wall_cooldown.is_stopped():
+				print("wall clingable")
 				state_machine.switch_states("WallCling")
 			elif player.wall_normal.x == 0.0:
 				player.wall_normal.x = -direction

@@ -6,6 +6,8 @@ func enter(_prev_info:={}) -> void:
 	#halt momentum at start of wall slide
 	player.velocity.x = 0
 	player.velocity.y = 0
+
+	player.wall_cooldown.start()
 	pass
 
 func state_physics(_delta: float) -> void:
