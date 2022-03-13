@@ -13,8 +13,8 @@ export(float) var DASH_TIME = 0.2
 export(float) var DASH_COOLDOWN_TIME = 0.3
 export(float) var GAP_LENGTH = 12.5
 export(float) var WALL_COOLDOWN_TIME = 0.2
-export(float) var WALL_KICK_POWER = 5.0
-export(float) var WALL_KICK_TIME = 1.5
+export(float) var WALL_KICK_POWER = 2.5
+export(float) var WALL_KICK_TIME = 0.5
 
 var velocity:= Vector2.ZERO
 var jump_force: float

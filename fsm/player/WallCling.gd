@@ -11,12 +11,15 @@ func enter(_prev_info:={}) -> void:
 	#halt momentum at start of wall slide
 	player.velocity.x = 0
 	player.velocity.y = 0
-	
-	player.face_direction = sign(-player.wall_normal.x)
 
 	player.wall_cooldown.start()
 	clingtimer.start()
 	pass
+	
+func exit() -> Dictionary:
+	player.face_direction = sign(player.wall_normal.x)
+	.exit()
+	return _state_info
 
 func state_physics(_delta: float) -> void:
 	
