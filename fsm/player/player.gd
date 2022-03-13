@@ -13,6 +13,8 @@ export(float) var DASH_TIME = 0.2
 export(float) var DASH_COOLDOWN_TIME = 0.3
 export(float) var GAP_LENGTH = 12.5
 export(float) var WALL_COOLDOWN_TIME = 0.2
+export(float) var WALL_KICK_POWER = 5.0
+export(float) var WALL_KICK_TIME = 1.5
 
 var velocity:= Vector2.ZERO
 var jump_force: float
@@ -30,6 +32,7 @@ var was_on_floor: bool
 var on_wall: bool
 var floor_snap: bool
 var wall_normal:= Vector2.ZERO
+var wall_kick: float
 
 onready var dash_cooldown:= $DashCooldown
 var can_adash:= true
@@ -56,6 +59,7 @@ func _ready() -> void:
 	min_jump_force = -_jump_vel(MIN_JUMP_HEIGHT,GAP_LENGTH/2.0)
 	#calculate dash constant
 	dash_force = _dash_speed()
+	wall_kick = _wall_kick()
 	
 	#initialize values
 	on_floor = is_on_floor()
@@ -181,6 +185,9 @@ func _jump_vel(h: float, x: float) -> float:
 
 func _dash_speed() -> float:
 	return DASH_LENGTH*_tile_units/DASH_TIME
+	
+func _wall_kick():
+	return WALL_KICK_POWER*_tile_units/WALL_KICK_TIME
 
 #debug
 func _unhandled_input(event: InputEvent) -> void:

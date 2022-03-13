@@ -56,6 +56,9 @@ script = ExtResource( 4 )
 [node name="Jump" type="Node" parent="MainSM/MovementStates/OnAir" groups=["PlayerStates"]]
 script = ExtResource( 7 )
 
+[node name="WallJumpHold" type="Timer" parent="MainSM/MovementStates/OnAir/Jump"]
+one_shot = true
+
 [node name="Fall" type="Node" parent="MainSM/MovementStates/OnAir" groups=["PlayerStates"]]
 script = ExtResource( 8 )
 

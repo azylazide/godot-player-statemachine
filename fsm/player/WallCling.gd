@@ -3,7 +3,7 @@ extends "res://fsm/player/OnWall.gd"
 onready var clingtimer:= $ClingTime
 
 func _ready() -> void:
-	clingtimer.wait_time = 0.2
+	clingtimer.wait_time = 0.1
 
 func enter(_prev_info:={}) -> void:
 #	.enter(_prev_info)
@@ -11,6 +11,8 @@ func enter(_prev_info:={}) -> void:
 	#halt momentum at start of wall slide
 	player.velocity.x = 0
 	player.velocity.y = 0
+	
+	player.face_direction = sign(-player.wall_normal.x)
 
 	player.wall_cooldown.start()
 	clingtimer.start()
@@ -47,6 +49,7 @@ func state_physics(_delta: float) -> void:
 func state_input(_event: InputEvent) -> void:
 	#if player leaves wall by jumping off
 	if _event.is_action_pressed("jump"):
+		state_machine.switch_states("Jump")
 		pass
 	#if player dashes off wall
 	elif _event.is_action_pressed("dash"):
