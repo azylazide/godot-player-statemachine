@@ -1,5 +1,10 @@
 extends "res://fsm/player/OnWall.gd"
 
+onready var clingtimer:= $ClingTime
+
+func _ready() -> void:
+	clingtimer.wait_time = 0.2
+
 func enter(_prev_info:={}) -> void:
 #	.enter(_prev_info)
 	
@@ -8,6 +13,7 @@ func enter(_prev_info:={}) -> void:
 	player.velocity.y = 0
 
 	player.wall_cooldown.start()
+	clingtimer.start()
 	pass
 
 func state_physics(_delta: float) -> void:
@@ -16,7 +22,10 @@ func state_physics(_delta: float) -> void:
 	#player.velocity.x = -(player.wall_normal.x/player.wall_normal.x)*sticking_vel
 	
 	#if player leaves wall by moving away
-	var direction = player.get_direction() 
+	if clingtimer.is_stopped():
+		var direction = player.get_direction()
+		if direction*player.wall_normal.x > 0:
+			state_machine.switch_states("Fall")
 	
 	#slowdown custom gravity for sliding
 	player.velocity.y += 0.1*player.fall_grav*_delta

@@ -71,6 +71,9 @@ script = ExtResource( 13 )
 [node name="WallCling" type="Node" parent="MainSM/MovementStates/OnWall" groups=["PlayerStates"]]
 script = ExtResource( 14 )
 
+[node name="ClingTime" type="Timer" parent="MainSM/MovementStates/OnWall/WallCling"]
+one_shot = true
+
 [node name="Death" type="Node" parent="MainSM" groups=["PlayerStates"]]
 script = ExtResource( 12 )
 
