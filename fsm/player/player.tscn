@@ -68,7 +68,7 @@ one_shot = true
 [node name="OnWall" type="Node" parent="MainSM/MovementStates"]
 script = ExtResource( 13 )
 
-[node name="WallCling" type="Node" parent="MainSM/MovementStates/OnWall"]
+[node name="WallCling" type="Node" parent="MainSM/MovementStates/OnWall" groups=["PlayerStates"]]
 script = ExtResource( 14 )
 
 [node name="Death" type="Node" parent="MainSM" groups=["PlayerStates"]]

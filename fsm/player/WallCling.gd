@@ -17,7 +17,7 @@ func state_physics(_delta: float) -> void:
 	var direction = player.get_direction() 
 	
 	#slowdown custom gravity for sliding
-	player.velocity.y += 0.3*player.fall_grav*_delta
+	player.velocity.y += 0.1*player.fall_grav*_delta
 	#TO DO: change to custom terminal sliding speed
 	player.velocity.y = min(player.velocity.y,player.MAX_FALL_TILE*player._tile_units)
 	
@@ -26,15 +26,12 @@ func state_physics(_delta: float) -> void:
 	player.after_grounded()
 	player.wall_collision()
 	
-	#if player leaves wall by end of wall
+	if player.on_floor:
+		state_machine.switch_states("Idle")
+	
 	if not player.on_wall:
-		#if wall ends but is on ground
-		if player.on_floor:
-			state_machine.switch_states("Idle")
 		#if wall ends and player falls
-		else:
-			state_machine.switch_states("Fall")
-		pass
+		state_machine.switch_states("Fall")
 
 func state_input(_event: InputEvent) -> void:
 	#if player leaves wall by jumping off

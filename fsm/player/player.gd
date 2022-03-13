@@ -134,19 +134,27 @@ func floor_check() -> bool:
 func wall_check() -> bool:
 	
 	#TO DO: check if wall is valid for wall clinging
+	var left: bool = left_raycast.is_colliding()
+	var right: bool = right_raycast.is_colliding()
 	
 	#check if player is close to two walls
-	if left_raycast.is_colliding() and right_raycast.is_colliding():
+	if left and right:
 		wall_normal = Vector2.ZERO
 		return true
 	#check left
-	elif left_raycast.is_colliding():
+	elif left:
 		wall_normal = left_raycast.get_collision_normal()
-		return true
+		#check for valid wall angle
+		if atan2(wall_normal.y,wall_normal.x) == 0:
+			return true
+		return false
 	#check right
-	elif right_raycast.is_colliding():
+	elif right:
 		wall_normal = right_raycast.get_collision_normal()
-		return true
+		#check for valid wall angle
+		if atan2(wall_normal.y,wall_normal.x) == 0:
+			return true
+		return false
 	#no wall
 	else:
 		return false
