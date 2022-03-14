@@ -8,7 +8,7 @@ export(float) var COYOTE_TIME = 0.1
 export(float) var JUMP_HEIGHT = 5.5
 export(float) var MIN_JUMP_HEIGHT = 0.5
 export(float) var JUMP_BUFFER_TIME = 0.1
-export(float) var DASH_LENGTH = 5.0
+export(float) var DASH_LENGTH = 2.0
 export(float) var DASH_TIME = 0.2
 export(float) var DASH_COOLDOWN_TIME = 0.3
 export(float) var GAP_LENGTH = 12.5
@@ -33,7 +33,6 @@ var on_wall: bool
 var floor_snap: bool
 var wall_normal:= Vector2.ZERO
 var wall_kick: float
-var is_walljump:= false
 
 onready var dash_cooldown:= $DashCooldown
 var can_adash:= true

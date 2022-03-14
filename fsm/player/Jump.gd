@@ -10,7 +10,6 @@ func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 	player.floor_snap = false
 	player.coyote_timer.stop()
-	player.is_walljump = false
 	
 	if _prev_state.name == "Fall":
 		#immediate wall kick

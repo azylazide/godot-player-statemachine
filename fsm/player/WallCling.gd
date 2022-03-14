@@ -8,6 +8,9 @@ func _ready() -> void:
 func enter(_prev_info:={}) -> void:
 #	.enter(_prev_info)
 	
+	player.can_adash = true
+	player.can_ajump = true
+	
 	#halt momentum at start of wall slide
 	player.velocity.x = 0
 	player.velocity.y = 0
@@ -53,7 +56,7 @@ func state_input(_event: InputEvent) -> void:
 	#if player leaves wall by jumping off
 	if _event.is_action_pressed("jump"):
 		state_machine.switch_states("Jump")
-		pass
+
 	#if player dashes off wall
 	elif _event.is_action_pressed("dash"):
-		pass
+		state_machine.switch_states("ADash")
