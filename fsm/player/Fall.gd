@@ -31,7 +31,7 @@ func state_input(_event: InputEvent) -> void:
 		
 		#transition to wall jump when near wall while falling even if not in slide state
 		if player.on_wall:
-			pass
+			state_machine.switch_states("Jump")
 		
 		#wall jump has priority over double jump	
 		elif not player.on_wall and player.can_ajump:

@@ -10,9 +10,21 @@ func enter(_prev_info:={}) -> void:
 	.enter(_prev_info)
 	player.floor_snap = false
 	player.coyote_timer.stop()
+	player.is_walljump = false
 	
 	if _prev_state.name == "Fall":
-		player.velocity.y = player.jump_force*0.8
+		#immediate wall kick
+		if player.on_wall:
+			var direction = player.get_direction()
+			#single wall collision; wall cooldown over
+			if player.wall_normal != Vector2.ZERO and player.wall_cooldown.is_stopped():
+				walljump_holder.start()
+				player.face_direction = sign(player.wall_normal.x)
+				player.velocity.x = player.face_direction*player.wall_kick
+				player.velocity.y = player.jump_force
+		#double jump
+		else:
+			player.velocity.y = player.jump_force*0.8
 	elif _prev_state.name == "GDash":
 		player.velocity.y = player.jump_force*1.2
 	elif _prev_state.name == "WallCling":
@@ -22,13 +34,9 @@ func enter(_prev_info:={}) -> void:
 	else:
 		player.velocity.y = player.jump_force
 
-	#apply horizontal velocity if coming from wall cling or a wall jump
-
 func state_physics(_delta: float) -> void:
 	player.apply_gravity(_delta)
-	if _prev_state.name == "WallCling" and not walljump_holder.is_stopped():
-		pass
-	else:
+	if walljump_holder.is_stopped():
 		player.calculate_velocity()
 	player.prior_grounded()
 	player.apply_movement()

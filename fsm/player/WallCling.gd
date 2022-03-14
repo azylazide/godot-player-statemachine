@@ -35,7 +35,7 @@ func state_physics(_delta: float) -> void:
 	#slowdown custom gravity for sliding
 	player.velocity.y += 0.1*player.fall_grav*_delta
 	#TO DO: change to custom terminal sliding speed
-	player.velocity.y = min(player.velocity.y,player.MAX_FALL_TILE*player._tile_units)
+	player.velocity.y = min(player.velocity.y,0.5*player.MAX_FALL_TILE*player._tile_units)
 	
 	player.prior_grounded()
 	player.apply_movement()

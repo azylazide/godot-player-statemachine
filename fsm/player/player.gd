@@ -33,6 +33,7 @@ var on_wall: bool
 var floor_snap: bool
 var wall_normal:= Vector2.ZERO
 var wall_kick: float
+var is_walljump:= false
 
 onready var dash_cooldown:= $DashCooldown
 var can_adash:= true
